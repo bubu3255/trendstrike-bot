@@ -9,18 +9,13 @@ CHAT_ID = "-1003800263291"
 @app.route('/webhook', methods=['POST'])
 def webhook():
     data = request.json
-
-    message = data.get("message", "TradingView Alert")
-
-    url = f"https://api.telegram.org/bot8764471009:AAE5kTp_zNTAAvMwlseOTqs8KvNrjGrutrI/sendMessage"
-
+    message = data.get("text", "TradingView Alert")  # ← FIXED: "message" changed to "text"
+    url = f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage"
     payload = {
         "chat_id": CHAT_ID,
         "text": message
     }
-
     requests.post(url, json=payload)
-
     return "ok"
 
 @app.route('/')
